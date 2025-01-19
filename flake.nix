@@ -41,13 +41,43 @@
     plasma-manager,
     nix-environments,
     ...
-  } @ inputs: {
-    devShells.x86_64-linux.openwrt = 
-      let 
-        pkgs = nixpkgs.packages.x86_64-linux;
-      in (import nix-environments.packages.x86_64-linux.openwrt) {
-        inherit pkgs;
-        extraPkgs = [pkgs.llvmPackages_latest.llvm];
+  } @ inputs: 
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+    {
+      devShells.${system}.openwrt = pkgs.mkShell {
+        name = "openwrt-devshell";
+        buildInputs = with pkgs; [          
+          bison
+          gnupg
+          go
+          libelf
+          llvmPackages_latest.llvm
+          ncdu 
+          openssl
+          swig
+          quilt
+          squashfsTools
+          unzip
+          wget
+          zstd
+          ncurses
+          pkg-config
+          (python3.withPackages (ps: [ ps.distutils ps.pip ps.setuptools ]))
+        ];
+        shellHook = ''
+          # Find the most recent LLVM library path
+          LLVM_HOST_PATH=${pkgs.llvmPackages_latest.llvm}/bin
+          
+          # Export the LLVM host path
+          export LLVM_HOST_PATH
+
+          echo "OpenWrt development shell"
+          echo "LLVM Host Path: $LLVM_HOST_PATH"
+          echo "ncurses-dev Path: ${pkgs.ncurses.dev}"
+        '';
       };
 
     nixosConfigurations = {

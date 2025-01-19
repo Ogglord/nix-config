@@ -32,6 +32,12 @@
   ## chaotic nix stuff
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   services.scx.enable = true; # by default uses scx_rustland scheduler
+  systemd.sleep.extraConfig = ''
+  AllowSuspend=no
+  AllowHibernation=no
+  AllowHybridSleep=no
+  AllowSuspendThenHibernate=no
+  '';
 
   # My custom modules
   steam.enable = true;
@@ -101,24 +107,27 @@
   };
 
   programs.zsh.enable = true;
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.ogge = {
     shell = pkgs.zsh;
     uid = 1000;
     isNormalUser = true;
-    extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
+    extraGroups = ["wheel"]; # Enable 'sudo' for the user.
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBepw1+OYharGgNwEMV+VLir7G1LWjkVSQa7HPNlYYgU ogge@Oscars-MacBook-Pro-2.local"
     ];
   };
+
+  # Enable passwordless sudo for wheel group
+  security.sudo.wheelNeedsPassword = false;
 
   programs.firefox.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    nixpkgs-fmt
-    dr460nized-kde-theme # chaotic nix repo
+    #nixpkgs-fmt
+    #dr460nized-kde-theme # chaotic nix repo
     #proton-ge-custom
   ];
 
