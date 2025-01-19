@@ -1,5 +1,4 @@
-{ lib, ... }:
-with lib;
+{ config, lib, ... }:
 {
   options = {
     dotfiles = lib.mkOption {

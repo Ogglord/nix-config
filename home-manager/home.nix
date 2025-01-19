@@ -6,6 +6,7 @@ let
 in
 {
   imports = [
+    ./dotfiles
     ./modules/zed
     ./modules/zsh
   ];
@@ -26,9 +27,11 @@ in
 
     # User Packages
     packages = with pkgs; [
-      # System Utilities
-      btop
 
+      # System Utilities
+      alejandra #nix formatter written in rust
+      btop
+      ghostty
       # Themes and Customization
       bibata-cursors
       papirus-nord

@@ -9,7 +9,9 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./graphics-configuration.nix
       ./disk-config.nix
+      ./modules
     ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
@@ -20,47 +22,10 @@
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
   services.scx.enable = true; # by default uses scx_rustland scheduler
 
+  # My custom modules
+  steam.enable = true;
+  steam.enableExtraPackages = true;
 
-
-
-  # Enable OpenGL
-  hardware.graphics = {
-    enable = true;
-  };
-  # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = [ "nvidia" ];
-  services.vscode-server.enable = true;
-  hardware.nvidia = {
-
-    # Modesetting is required.
-    modesetting.enable = true;
-
-    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
-    # of just the bare essentials.
-    powerManagement.enable = false;
-
-    # Fine-grained power management. Turns off GPU when not in use.
-    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-    powerManagement.finegrained = false;
-
-    # Use the NVidia open source kernel module (not to be confused with the
-    # independent third-party "nouveau" open source driver).
-    # Support is limited to the Turing and later architectures. Full list of
-    # supported GPUs is at:
-    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
-    # Only available from driver 515.43.04+
-    # Currently alpha-quality/buggy, so false is currently the recommended setting.
-    open = false;
-
-    # Enable the Nvidia settings menu,
-    # accessible via `nvidia-settings`.
-    nvidiaSettings = true;
-
-    # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
-  };
 
   networking.hostName = "monsterdator"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -89,29 +54,31 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services.xserver.enable = false;
 
   #  services.displayManager.sddm.keyboardLayout = "sv-latin1";
   services.displayManager.sddm = {
     enable = true;
     settings = {
-      Autologin = {
-        Session = "plasma.desktop";
-        User = "ogge";
-      };
-      X11 = {
-        KeyboardLayout = "sv-latin1";
-      };
+      #Autologin = {
+      #  Session = "plasma.desktop";
+      #  User = "ogge";
+      #};
+      #X11 = {
+      #  KeyboardLayout = "sv-latin1";
+      #};
     };
   };
   services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
+
 
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
     elisa
     krdp
   ];
 
+  services.vscode-server.enable = true;
   services.flatpak.enable = true;
 
   # Configure keymap in X11
@@ -124,9 +91,10 @@
     pulse.enable = true;
   };
 
-
+  programs.zsh.enable = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ogge = {
+    shell = pkgs.zsh;
     uid = 1000;
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
@@ -165,5 +133,5 @@
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.05"; # Did you read the comment?
 
- 
+
 }

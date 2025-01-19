@@ -45,6 +45,11 @@ SAVEHIST=2000
 HISTFILE=~/.zsh_history
 setopt appendhistory
 
+# make zsh behave more like bash
+setopt interactivecomments
+setopt no_nomatch
+setopt cshnullglob
+
 # Prompt
 autoload -Uz promptinit
 promptinit

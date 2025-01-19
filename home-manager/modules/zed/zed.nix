@@ -64,6 +64,19 @@
                     };
                 };
             };
+            languages = {
+                    Nix = {
+                      language_servers = [
+                        "nil"
+                        "!nixd"
+                      ];
+                      formatter = {
+                        external = {
+                          command = "nixfmt";
+                        };
+                      };
+                    };
+                  };
             vim_mode = false;
             ## tell zed to use direnv and direnv can use a flake.nix enviroment.
             load_direnv = "shell_hook";
