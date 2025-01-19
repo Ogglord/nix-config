@@ -1,14 +1,17 @@
 { config, pkgs, sops-nix, ... }:
 
-let 
+let
   USER = "ogge";
   UID = 1000;
-in 
+in
 {
   imports = [
     ./modules/zed
+    ./modules/zsh
   ];
-
+  ## my modules goes here
+  zed.enable = true;
+  zsh.enable = true;
   # User Configuration
   # ------------------------
   home = {
@@ -18,7 +21,7 @@ in
 
     # Environment Variables
     sessionVariables = {
-      EDITOR = "nano";      
+      EDITOR = "nano";
     };
 
     # User Packages
@@ -30,6 +33,7 @@ in
       bibata-cursors
       papirus-nord
       nil
+      nixd
       nordic
 
       # Fonts
@@ -153,18 +157,6 @@ in
         "caps:escape"
       ];
     };
-  };
-
-  # Application Entries
-  # ------------------------
-  xdg.desktopEntries.zed = {
-    name = "Zed";
-    comment = "A high-performance, multiplayer code editor";
-    exec = "zeditorw %F";
-    icon = "zed";
-    categories = [ "Development" "TextEditor" ];
-    terminal = false;
-    type = "Application";
   };
 
    # Sops configuration
