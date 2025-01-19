@@ -72,7 +72,7 @@
                       ];
                       formatter = {
                         external = {
-                          command = "nixfmt";
+                          command = "alejandra";
                         };
                       };
                     };

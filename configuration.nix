@@ -1,22 +1,33 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
-{ config, lib, pkgs, inputs, ... }:
-
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./graphics-configuration.nix
-      ./disk-config.nix
-      ./modules
-    ];
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./graphics-configuration.nix
+    ./disk-config.nix
+    ./modules
+  ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   nixpkgs.config.allowUnfree = true;
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot = {
+    enable = true;
+    configurationLimit = 5; # Optional: limits number of configurations to keep
+    extraEntries = {
+      "bazzite.conf" = ''
+        title Bazzite
+        efi /fedora/EFI/fedora/shimx64.efi
+      '';
+    };
+  };
   boot.loader.efi.canTouchEfiVariables = true;
   ## chaotic nix stuff
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
@@ -25,7 +36,6 @@
   # My custom modules
   steam.enable = true;
   steam.enableExtraPackages = true;
-
 
   networking.hostName = "monsterdator"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -72,7 +82,6 @@
   services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
 
-
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
     elisa
     krdp
@@ -97,7 +106,7 @@
     shell = pkgs.zsh;
     uid = 1000;
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBepw1+OYharGgNwEMV+VLir7G1LWjkVSQa7HPNlYYgU ogge@Oscars-MacBook-Pro-2.local"
     ];
@@ -126,12 +135,9 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-
   # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
   # and migrated your data accordingly.
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.05"; # Did you read the comment?
-
-
 }

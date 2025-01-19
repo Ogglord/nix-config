@@ -160,6 +160,26 @@
         "type": "github"
       }
     },
+    "nix-environments": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1737220233,
+        "narHash": "sha256-Y1XBkyq4tTaKC3C006bbqXjEMXm3927nql0X28LbyJM=",
+        "owner": "nix-community",
+        "repo": "nix-environments",
+        "rev": "f80bb7a7c67cd0ef82d2281cde883ffd0fa60703",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-environments",
+        "type": "github"
+      }
+    },
     "nix-github-actions": {
       "inputs": {
         "nixpkgs": [
@@ -257,6 +277,7 @@
         "chaotic": "chaotic",
         "disko": "disko",
         "home-manager": "home-manager_2",
+        "nix-environments": "nix-environments",
         "nixpkgs": "nixpkgs_2",
         "plasma-manager": "plasma-manager",
         "sops-nix": "sops-nix",

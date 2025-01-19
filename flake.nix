@@ -5,6 +5,11 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     vscode-server.url = "github:nix-community/nixos-vscode-server";
+    
+    nix-environments = {
+      url = "github:nix-community/nix-environments";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     disko = {
       url = "github:nix-community/disko";
@@ -28,12 +33,28 @@
     };
   };
 
-  outputs = { self, nixpkgs, disko, home-manager, plasma-manager, ... }@inputs: {
+  outputs = {
+    self,
+    nixpkgs,
+    disko,
+    home-manager,
+    plasma-manager,
+    nix-environments,
+    ...
+  } @ inputs: {
+    devShells.x86_64-linux.openwrt = 
+      let 
+        pkgs = nixpkgs.packages.x86_64-linux;
+      in (import nix-environments.packages.x86_64-linux.openwrt) {
+        inherit pkgs;
+        extraPkgs = [pkgs.llvmPackages_latest.llvm];
+      };
+
     nixosConfigurations = {
       # Using the hostname from configuration.nix
       monsterdator = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
+        specialArgs = {inherit inputs;};
         modules = [
           ./configuration.nix
           disko.nixosModules.disko
@@ -47,9 +68,9 @@
             home-manager.sharedModules = [
               inputs.sops-nix.homeManagerModules.sops
             ];
-            home-manager.users.ogge = { pkgs, ... }: {
+            home-manager.users.ogge = {pkgs, ...}: {
               imports = [
-                ./home-manager/home.nix                
+                ./home-manager/home.nix
                 plasma-manager.homeManagerModules.plasma-manager
                 {
                   nixpkgs.config.allowUnfree = true;
