@@ -23,6 +23,7 @@ in
     # Environment Variables
     sessionVariables = {
       EDITOR = "nano";
+      MANGOHUD = 1;
     };
 
     # User Packages

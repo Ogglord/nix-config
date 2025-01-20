@@ -15,28 +15,33 @@
     ./disk-config.nix
     ./modules
   ];
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = ["nix-command" "flakes"];  
   nixpkgs.config.allowUnfree = true;
+  hardware.enableRedistributableFirmware = true;
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot = {
     enable = true;
+    edk2-uefi-shell.enable = true;
     configurationLimit = 5; # Optional: limits number of configurations to keep
     extraEntries = {
-      "bazzite.conf" = ''
-        title Bazzite
-        efi /fedora/EFI/fedora/shimx64.efi
+      "bazzite_cl.conf" = ''
+        title Bazzite Chainload
+        efi /efi/edk2-uefi-shell/shell.efi
+        options -nointerrupt -nomap -noversion HD1b:\EFI\fedora\shimx64.efi
       '';
     };
   };
   boot.loader.efi.canTouchEfiVariables = true;
   ## chaotic nix stuff
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
-  services.scx.enable = true; # by default uses scx_rustland scheduler
+  services.scx.enable = false; # by default uses scx_rustland scheduler
+  #services.scx.package = pkgs.scx_git.full; # latest from git
+  #services.scx.scheduler = "scx_lavd";
   systemd.sleep.extraConfig = ''
-  AllowSuspend=no
-  AllowHibernation=no
-  AllowHybridSleep=no
-  AllowSuspendThenHibernate=no
+    AllowSuspend=no
+    AllowHibernation=no
+    AllowHybridSleep=no
+    AllowSuspendThenHibernate=no
   '';
 
   # My custom modules
@@ -44,6 +49,7 @@
   steam.enableExtraPackages = true;
 
   networking.hostName = "monsterdator"; # Define your hostname.
+  networking.firewall.enable = lib.mkForce false;
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
@@ -126,6 +132,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    edk2-uefi-shell
     #nixpkgs-fmt
     #dr460nized-kde-theme # chaotic nix repo
     #proton-ge-custom

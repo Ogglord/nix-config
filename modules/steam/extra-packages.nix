@@ -16,6 +16,7 @@ in {
       protontricks
       protonup-qt
       proton-ge-custom
+      mangohud_git
     ];
   };
 }
