@@ -34,6 +34,7 @@ in {
       # System Utilities
       alejandra #nix formatter written in rust
       btop
+      comma # run any app without installing, prefix it with ","
       ghostty
       # Themes and Customization
       bibata-cursors
