@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  cfg = config.programs.steam;
+  cfg = config.steam;
 in {
   options.steam = {
     enableExtraPackages = lib.mkEnableOption "steam extra packages";
@@ -12,11 +12,12 @@ in {
 
   config = lib.mkIf cfg.enableExtraPackages {
     environment.systemPackages = with pkgs; [
-      winetricks
-      protontricks
-      protonup-qt
-      proton-ge-custom
-      mangohud_git
+      #winetricks
+      #protontricks
+      #protonup-qt
+      #proton-ge-custom
+      #mangohud_git
+      gamescope_git
     ];
   };
 }

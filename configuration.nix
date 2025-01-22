@@ -84,6 +84,8 @@
   # My custom modules
   steam.enable = true;
   steam.enableExtraPackages = true;
+  steam.mangohud.enable = true;
+  steam.mangohud.enableGlobalEnvVar = false;
 
   networking.hostName = "monsterdator"; # Define your hostname.
   networking.firewall.enable = lib.mkForce false;
@@ -139,9 +141,7 @@
     elisa
     krdp
   ];
-  environment.variables = {
-    MANGOHUD = 1;
-  };
+
   environment.pathsToLink = ["/share/xdg-desktop-portal" "/share/applications"];
   services.vscode-server.enable = true;
   services.flatpak.enable = true;

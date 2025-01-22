@@ -49,7 +49,7 @@ in {
     #=> Gamescope <=#
     programs.gamescope = {
       enable = cfg.enable;
-      package = pkgs.gamescope;
+      package = pkgs.gamescope_git;
       capSysNice = true;
     };
   };
