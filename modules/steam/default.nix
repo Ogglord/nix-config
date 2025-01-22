@@ -7,7 +7,11 @@
 with lib; let
   cfg = config.steam;
 in {
-  imports = [./extra-packages.nix];
+  imports = [
+    ./extra-packages.nix
+    ./mangohud.nix
+  ];
+
   options.steam = {
     enable = mkEnableOption "Enable steam module";
   };

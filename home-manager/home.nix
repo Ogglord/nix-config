@@ -1,10 +1,12 @@
-{ config, pkgs, sops-nix, ... }:
-
-let
+{
+  config,
+  pkgs,
+  sops-nix,
+  ...
+}: let
   USER = "ogge";
   UID = 1000;
-in
-{
+in {
   imports = [
     ./dotfiles
     ./modules/zed
@@ -24,11 +26,11 @@ in
     sessionVariables = {
       EDITOR = "nano";
       MANGOHUD = 1;
+      COSMIC_DATA_CONTROL_ENABLED = 1;
     };
 
     # User Packages
     packages = with pkgs; [
-
       # System Utilities
       alejandra #nix formatter written in rust
       btop
@@ -50,7 +52,7 @@ in
   # System Configuration
   # ------------------------
   fonts.fontconfig.enable = true;
-  programs.home-manager.enable = true;
+  programs.home-manager.enable = false;
 
   # Development Tools
   # ------------------------
@@ -72,14 +74,6 @@ in
     #GitCredentialHelper.enable = true;
   };
 
-  programs.chromium = {
-    enable = true;
-    package = pkgs.google-chrome;
-    extensions = [
-      { id = "ghmbeldphafepmbegfdlkpapadhbakde";} #protonpass
-    ];
-  };
-
   # VSCode Configuration
   programs.vscode = {
     enable = true;
@@ -87,7 +81,7 @@ in
     enableExtensionUpdateCheck = false;
     mutableExtensionsDir = false;
 
-    extensions = (with pkgs.vscode-extensions; [
+    extensions = with pkgs.vscode-extensions; [
       # Development Tools
       ms-vscode-remote.remote-ssh
       mhutchie.git-graph
@@ -98,32 +92,13 @@ in
 
       # AI Assistance
       saoudrizwan.claude-dev
-    ]);
-  };
-
-  # Terminal Configuration
-  # ------------------------
-  programs.alacritty = {
-    enable = true;
-    settings = {
-      font = {
-        normal.family = "JetBrainsMono Nerd Font";
-        normal.style = "Regular";
-        bold.family = "JetBrainsMono Nerd Font";
-        bold.style = "Bold";
-        italic.family = "JetBrainsMono Nerd Font";
-        italic.style = "Italic";
-        bold_italic.family = "JetBrainsMono Nerd Font";
-        bold_italic.style = "Bold Italic";
-        size = 10.0;
-      };
-    };
+    ];
   };
 
   # Desktop Environment Configuration
   # ------------------------
   programs.plasma = {
-    enable = true;
+    enable = false;
 
     # Workspace Theme and Appearance
     workspace = {
@@ -147,15 +122,17 @@ in
     };
 
     # Panel Configuration
-    panels = [{
-      location = "bottom";
-      height = 38;
-    }];
+    panels = [
+      {
+        location = "bottom";
+        height = 38;
+      }
+    ];
 
     # Input Settings
     input.keyboard = {
       numlockOnStartup = "on";
-      layouts = [{ layout = "sv"; }];
+      layouts = [{layout = "sv";}];
       options = [
         "eurosign:e"
         "caps:escape"
@@ -163,7 +140,7 @@ in
     };
   };
 
-   # Sops configuration
+  # Sops configuration
   sops = {
     age.keyFile = "/home/ogge/.config/sops/age/keys.txt";
     defaultSopsFile = ./../secrets/secrets.yaml;

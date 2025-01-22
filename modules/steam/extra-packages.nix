@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  cfg = config.steam;
+  cfg = config.programs.steam;
 in {
   options.steam = {
     enableExtraPackages = lib.mkEnableOption "steam extra packages";
