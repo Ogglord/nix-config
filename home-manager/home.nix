@@ -25,6 +25,8 @@ in {
   zed.enable = true;
   zsh.enable = true;
   macchina.enable = true;
+
+  # ------------------------
   # User Configuration
   # ------------------------
   home = {
@@ -96,6 +98,24 @@ in {
       "extensions.autoCheckUpdates" = false;
       "update.mode" = "none";
       "editor.inlineSuggest.suppressSuggestions" = true;
+      "git.enableSmartCommit" = true;
+      "git.confirmSync" = false;
+      "editor.formatOnSave" = true;
+      "editor.formatOnPaste" = true;
+      "nix.enableLanguageServer" = true;
+      "nix.serverPath" = "nixd";
+      "nix.serverSettings" = {
+        "nixd" = {
+          "formatting" = {
+            "command" = ["alejandra"];
+          };
+          "options" = {
+            "nixos" = {
+              "expr" = "(builtins.getFlake \"/home/ogge/nixos-config/flake.nix\").nixosConfigurations.monsterdator.options";
+            };
+          };
+        };
+      };
     };
 
     extensions = with pkgs.vscode-extensions;
