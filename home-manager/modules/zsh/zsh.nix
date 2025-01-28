@@ -1,7 +1,10 @@
-{ pkgs, lib, config, ... }:
 {
-
-home.packages = with pkgs; [
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
+  home.packages = with pkgs; [
     bat
     eza
     less
@@ -11,27 +14,24 @@ home.packages = with pkgs; [
     tmux
     tree
     zsh-powerlevel10k
-  ]
+  ];
 
-    # Home Manager is pretty good at managing dotfiles. The primary way to manage
+  # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
     #".justfile".source = dotfiles/justfile;
     #".config/topgrade/topgrade.toml".source = dotfiles/topgrade.toml;
-    ".config/zsh/.zsh_plugins.txt".source = dotfiles/zsh_plugins.txt;    
+    ".config/zsh/.zsh_plugins.txt".source = ./zsh_plugins.txt;
     ".config/zsh/zshrc.d" = {
       source = ./zshrc.d;
       recursive = true;
     };
-
-    ".config/macchina/themes/birdie.toml".source = dotfiles/macchina_birdie.toml;
-    ".config/macchina/themes/birdie.ascii".source = dotfiles/macchina_birdie.ascii;
-    ".config/macchina/macchina.toml".source = dotfiles/macchina.toml;
   };
- 
- programs.zsh = {
+
+  programs.zsh = {
     enable = true;
     autocd = false;
+    dotDir = ".config/zsh";
     plugins = [
       {
         name = "antidote";
@@ -45,7 +45,7 @@ home.packages = with pkgs; [
       # }
       {
         name = "powerlevel10k-config";
-        src = lib.cleanSource ./;
+        src = lib.cleanSource ./.;
         file = "p10k.zsh";
       }
     ];
@@ -119,5 +119,4 @@ home.packages = with pkgs; [
       eval "$(direnv hook zsh)"
     '';
   };
-
 }

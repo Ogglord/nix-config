@@ -1,5 +1,6 @@
 {...}: {
   imports = [
     ./steam
+    ./bluetooth.nix
   ];
 }

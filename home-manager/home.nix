@@ -11,10 +11,12 @@ in {
     ./dotfiles
     ./modules/zed
     ./modules/zsh
+    ./modules/macchina
   ];
   ## my modules goes here
   zed.enable = true;
   zsh.enable = true;
+  macchina.enable = true;
   # User Configuration
   # ------------------------
   home = {
@@ -35,6 +37,7 @@ in {
       btop
       comma # run any app without installing, prefix it with ","
       ghostty
+      direnv
       # Themes and Customization
       bibata-cursors
       papirus-nord
