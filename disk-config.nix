@@ -3,10 +3,6 @@
     device = "/dev/nvme1n1p1"; # Your Fedora ESP (adjust partition number if needed)
     fsType = "vfat";
   };
-fileSystems."/mnt/fedora" = {
-    device = "/dev/nvme1n1p5"; 
-    fsType = "btrfs";
-  };  
 
   disko.devices = {
     disk = {
