@@ -1,21 +1,15 @@
-{
-  config,
-  pkgs,
-  sops-nix,
-  ...
-}: let
+{ config, pkgs, sops-nix, ... }:
+let
   USER = "ogge";
   UID = 1000;
 in {
-  imports = [
-    ./dotfiles
-    ./modules
-  ];
+  imports = [ ./dotfiles ./modules ];
   ## my modules goes here
   zed.enable = true;
   zsh.enable = true;
   macchina.enable = true;
   vscode.enable = true;
+  plasma.enable = true;
 
   # ------------------------
   # User Configuration
@@ -34,7 +28,7 @@ in {
     # User Packages
     packages = with pkgs; [
       # System Utilities
-      alejandra #nix formatter written in rust
+      alejandra # nix formatter written in rust
       btop
       comma # run any app without installing, prefix it with ","
       ghostty
@@ -44,6 +38,7 @@ in {
       papirus-nord
       nil
       nixd
+      nixfmt
       nordic
 
       # Fonts
@@ -66,9 +61,7 @@ in {
     enable = true;
     userName = "Ogglord";
     userEmail = "oag@proton.me";
-    extraConfig = {
-      init.defaultBranch = "main";
-    };
+    extraConfig = { init.defaultBranch = "main"; };
   };
 
   # GitHub CLI Configuration
@@ -78,57 +71,13 @@ in {
     #GitCredentialHelper.enable = true;
   };
 
-  # Desktop Environment Configuration
-  # ------------------------
-  programs.plasma = {
-    enable = false;
-
-    # Workspace Theme and Appearance
-    workspace = {
-      clickItemTo = "select";
-      iconTheme = "Papirus-Dark";
-      theme = "Nordic";
-      colorScheme = "Nordic";
-      cursor = {
-        theme = "Bibata-Modern-Ice";
-        size = 32;
-      };
-      wallpaper = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Patak/contents/images_dark/3840x2160.png";
-    };
-
-    # Keyboard Shortcuts
-    shortcuts = {
-      "kwin"."Switch to Desktop 1" = "Meta+1";
-      "kwin"."Switch to Desktop 2" = "Meta+2";
-      "kwin"."Switch to Desktop 3" = "Meta+3";
-      "kwin"."Switch to Desktop 4" = "Meta+4";
-    };
-
-    # Panel Configuration
-    panels = [
-      {
-        location = "bottom";
-        height = 38;
-      }
-    ];
-
-    # Input Settings
-    input.keyboard = {
-      numlockOnStartup = "on";
-      layouts = [{layout = "sv";}];
-      options = [
-        "eurosign:e"
-        "caps:escape"
-      ];
-    };
-  };
-
   # Sops configuration
   sops = {
     age.keyFile = "/home/ogge/.config/sops/age/keys.txt";
     defaultSopsFile = ./../secrets/secrets.yaml;
     secrets.ANTHROPIC_API_KEY = {
-      path = "%r/ANTHROPIC_API_KEY"; #%r becomes /run/user/1000/
+      path = "%r/ANTHROPIC_API_KEY"; # %r becomes /run/user/1000/
     };
   };
 }
+

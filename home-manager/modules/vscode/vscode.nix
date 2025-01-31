@@ -1,8 +1,5 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{ config, pkgs, ... }:
+let
   cody-ai = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
     mktplcRef = {
       name = "cody-ai";
@@ -32,13 +29,14 @@ in {
       "nix.serverSettings" = {
         "nixd" = {
           "formatting" = {
-            "command" = ["alejandra"];
+            #"command" = ["alejandra"];
+            "command" = [ "nixfmt" ];
           };
-          "options" = {
-            "nixos" = {
-              "expr" = "(builtins.getFlake \"/home/ogge/nixos-config/flake.nix\").nixosConfigurations.monsterdator.options";
-            };
-          };
+          #"options" = {
+          #  "nixos" = {
+          #    "expr" = "(builtins.getFlake \"/home/ogge/nixos-config/flake.nix\").nixosConfigurations.monsterdator.options";
+          #  };
+          #};
         };
       };
     };
@@ -57,7 +55,6 @@ in {
         saoudrizwan.claude-dev
 
         # straight_from_marketplace
-      ]
-      ++ [cody-ai];
+      ] ++ [ cody-ai ];
   };
 }
