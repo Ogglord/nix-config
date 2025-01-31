@@ -1,19 +1,15 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{ lib, pkgs, ... }: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./graphics-configuration.nix
-    ./disk-config.nix
+    ./disk-configuration.nix
     ./modules
   ];
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
   hardware.enableRedistributableFirmware = true;
   # Use the systemd-boot EFI boot loader.
@@ -71,7 +67,7 @@
   services.scx.enable = true; # by default uses scx_rustland scheduler
   #services.scx.package = pkgs.scx_git.full; # latest from git
   services.scx.scheduler = "scx_lavd";
-  services.scx.extraArgs = ["--performance"];
+  services.scx.extraArgs = [ "--performance" ];
   systemd.sleep.extraConfig = ''
     AllowSuspend=no
     AllowHibernation=no
@@ -129,18 +125,14 @@
         Session = "plasma.desktop";
         User = "ogge";
       };
-      X11 = {
-        KeyboardLayout = "sv-latin1";
-      };
+      X11 = { KeyboardLayout = "sv-latin1"; };
     };
   };
 
-  environment.plasma6.excludePackages = with pkgs.kdePackages; [
-    elisa
-    krdp
-  ];
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [ elisa krdp ];
 
-  environment.pathsToLink = ["/share/xdg-desktop-portal" "/share/applications"];
+  environment.pathsToLink =
+    [ "/share/xdg-desktop-portal" "/share/applications" ];
   services.vscode-server.enable = true;
   services.flatpak.enable = true;
 
@@ -160,7 +152,7 @@
     shell = pkgs.zsh;
     uid = 1000;
     isNormalUser = true;
-    extraGroups = ["wheel"]; # Enable 'sudo' for the user.
+    extraGroups = [ "wheel" ]; # Enable 'sudo' for the user.
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBepw1+OYharGgNwEMV+VLir7G1LWjkVSQa7HPNlYYgU ogge@Oscars-MacBook-Pro-2.local"
     ];
@@ -181,12 +173,13 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    edk2-uefi-shell
-    #nixpkgs-fmt
-    #dr460nized-kde-theme # chaotic nix repo
-    #proton-ge-custom
-  ];
+  environment.systemPackages = with pkgs;
+    [
+      edk2-uefi-shell
+      #nixpkgs-fmt
+      #dr460nized-kde-theme # chaotic nix repo
+      #proton-ge-custom
+    ];
 
   # List services that you want to enable:
 
