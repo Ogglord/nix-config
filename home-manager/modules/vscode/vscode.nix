@@ -2,7 +2,16 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  cody-ai = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+    mktplcRef = {
+      name = "cody-ai";
+      publisher = "sourcegraph";
+      version = "1.62.1"; # Replace with the current version
+      sha256 = "sha256-t8m6+L1Y6Fi6cIUVy0F99atFOWpX6tuXJ0xxnUgwmfk=";
+    };
+  };
+in {
   # VSCode Configuration
   programs.vscode = {
     enable = true;
