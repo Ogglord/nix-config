@@ -17,9 +17,7 @@
 in {
   imports = [
     ./dotfiles
-    ./modules/zed
-    ./modules/zsh
-    ./modules/macchina
+    ./modules
   ];
   ## my modules goes here
   zed.enable = true;

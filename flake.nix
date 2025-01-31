@@ -2,8 +2,7 @@
   description = "NixOS configuration";
 
   inputs = {
-    #nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs.follows = "nixos-cosmic/nixpkgs"; # NOTE: change "nixpkgs" to "nixpkgs-stable" to use stable NixOS release
+    nixpkgs.follows = "nixos-cosmic/nixpkgs";
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     vscode-server.url = "github:nix-community/nixos-vscode-server";
@@ -60,7 +59,7 @@
               trusted-public-keys = ["cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="];
             };
           }
-          ./configuration.nix
+          ./system/configuration.nix
           nixos-cosmic.nixosModules.default
           disko.nixosModules.disko
           inputs.vscode-server.nixosModules.default
@@ -73,7 +72,7 @@
             home-manager.sharedModules = [
               inputs.sops-nix.homeManagerModules.sops
             ];
-            home-manager.users.ogge = {pkgs, ...}: {
+            home-manager.users.ogge = {...}: {
               imports = [
                 ./home-manager/home.nix
                 plasma-manager.homeManagerModules.plasma-manager
