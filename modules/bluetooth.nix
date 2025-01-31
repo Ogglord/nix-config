@@ -14,7 +14,7 @@
       FastConnectable = true;
     };
   };
-  services.blueman.enable = true;
+  #services.blueman.enable = true;
 
   hardware.xpadneo.enable = true; # Enable the xpadneo driver for Xbox One wireless controllers
 

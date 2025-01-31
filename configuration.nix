@@ -169,6 +169,14 @@
   # Enable passwordless sudo for wheel group
   security.sudo.wheelNeedsPassword = false;
 
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
+
+  security.pam.services.kwallet = {
+    name = "kwallet";
+    enableKwallet = true;
+  };
+
   programs.firefox.enable = true;
 
   # List packages installed in system profile. To search, run:
