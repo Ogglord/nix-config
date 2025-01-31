@@ -87,18 +87,9 @@ This repository contains my NixOS configuration, which is managed using Nix flak
 1. **First Boot**
    - Reboot into your new NixOS installation
    - Log in with your user credentials
-   - The Cosmic desktop environment will start automatically
+   - The KDE Plasma desktop environment will start automatically
 
-2. **Verify Installation**
-   ```bash
-   # Check system status
-   systemctl status
-   
-   # Verify flake
-   nix flake check
-   ```
-
-3. **Update System**
+2. **Update System**
    ```bash
    # Update and apply system changes
    nix flake update && nix flake archive
