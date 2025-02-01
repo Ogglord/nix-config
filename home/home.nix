@@ -1,7 +1,5 @@
-{ config, pkgs, sops-nix, ... }:
-let
-  USER = "ogge";
-  UID = 1000;
+{ pkgs, ... }:
+let USER = "ogge";
 in {
   imports = [ ./dotfiles ./modules ];
   ## my modules goes here
@@ -16,8 +14,8 @@ in {
   # User Configuration
   # ------------------------
   home = {
-    username = "ogge";
-    homeDirectory = "/home/ogge";
+    username = "${USER}";
+    homeDirectory = "/home/${USER}";
     stateVersion = "23.11"; # Do not change unless you know what you're doing
 
     # Environment Variables
