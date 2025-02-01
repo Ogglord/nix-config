@@ -65,6 +65,7 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
+    theme = "Dracula";
     #  keyboardLayout = "sv-latin1";
     settings = {
       Autologin = {
@@ -122,6 +123,13 @@
   environment.systemPackages = with pkgs;
     [
       edk2-uefi-shell
+      #(pkgs.catppuccin-sddm.override {
+      #  flavor = "mocha";
+      #  font = "Noto Sans";
+      #  fontSize = "9";
+      #  #background = "/home/ogge/Pictures/wallpapers/1.jpg";
+      #  loginBackground = true;
+      #})
       #nixpkgs-fmt
       #dr460nized-kde-theme # chaotic nix repo
       #proton-ge-custom

@@ -10,6 +10,7 @@ in {
   macchina.enable = true;
   vscode.enable = true;
   plasma.enable = true;
+  wallpaper.enable = true;
 
   # ------------------------
   # User Configuration
@@ -33,9 +34,6 @@ in {
       comma # run any app without installing, prefix it with ","
       ghostty
       direnv
-      # Themes and Customization
-      bibata-cursors
-      papirus-nord
       nil
       nixd
       nixfmt
@@ -50,7 +48,7 @@ in {
 
   # System Configuration
   # ------------------------
-  fonts.fontconfig.enable = true;
+  #fonts.fontconfig.enable = true;
   programs.home-manager.enable = false;
 
   # Development Tools

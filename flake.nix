@@ -6,6 +6,7 @@
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     vscode-server.url = "github:nix-community/nixos-vscode-server";
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     nix-environments = {
       url = "github:nix-community/nix-environments";
@@ -59,6 +60,7 @@
             disko.nixosModules.disko
             inputs.vscode-server.nixosModules.default
             inputs.chaotic.nixosModules.default
+            inputs.nix-flatpak.nixosModules.nix-flatpak
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

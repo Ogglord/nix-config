@@ -6,14 +6,23 @@ in {
   options.plasma = { enable = mkEnableOption "plasma"; };
 
   config = mkIf cfg.enable {
+
+    home.packages = with pkgs; [
+      # Themes and Customization
+      bibata-cursors
+      papirus-nord
+      dracula-icon-theme
+      dracula-theme
+    ];
+
     programs.plasma = {
       enable = true;
 
       workspace = {
         clickItemTo = "select";
-        iconTheme = "Papirus-Dark";
-        theme = "Nordic";
-        colorScheme = "Nordic";
+        iconTheme = "Dracula";
+        theme = "Dracula";
+        colorScheme = "Dracula";
         cursor = {
           theme = "Bibata-Modern-Ice";
           size = 32;

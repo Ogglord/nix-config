@@ -196,6 +196,21 @@
         "type": "github"
       }
     },
+    "nix-flatpak": {
+      "locked": {
+        "lastModified": 1738175805,
+        "narHash": "sha256-fPjaARmK522JLJ7wxFebxG4eE/3HHSmuAA78iAZ+A7g=",
+        "owner": "gmodena",
+        "repo": "nix-flatpak",
+        "rev": "d4c75a33c4a7a16bf87cfd804fb5444a1ec53d49",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gmodena",
+        "repo": "nix-flatpak",
+        "type": "github"
+      }
+    },
     "nix-github-actions": {
       "inputs": {
         "nixpkgs": [
@@ -330,6 +345,7 @@
         "disko": "disko",
         "home-manager": "home-manager_2",
         "nix-environments": "nix-environments",
+        "nix-flatpak": "nix-flatpak",
         "nixos-cosmic": "nixos-cosmic",
         "nixpkgs": [
           "nixos-cosmic",
