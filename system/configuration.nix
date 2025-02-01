@@ -81,6 +81,7 @@
   environment.pathsToLink =
     [ "/share/xdg-desktop-portal" "/share/applications" ];
   services.vscode-server.enable = true;
+
   services.flatpak.enable = true;
 
   # Configure keymap in X11
