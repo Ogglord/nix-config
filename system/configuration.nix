@@ -26,56 +26,9 @@
     };
   };
   boot.loader.efi.canTouchEfiVariables = true;
-  ## chaotic nix stuff
-  ################################
-  #### KERNEL % SCHEDULER STUFF  #
-  ################################
-  boot.kernelPackages = pkgs.linuxPackages_cachyos;
-  #boot.kernelPackages = pkgs.linuxPackages_zen;
-
-  powerManagement.cpuFreqGovernor = "performance";
-  # boot.kernelParams = ["cgroup_no_v1=all" "systemd.unified_cgroup_hierarchy=yes"];
-  # boot.kernel.sysctl = {
-  #   "vm.swappiness" = 90; # when swapping to ssd, otherwise change to 1
-  #   "vm.vfs_cache_pressure" = 50;
-  #   "vm.dirty_background_ratio" = 20;
-  #   "vm.dirty_ratio" = 50;
-  #   # these are the zen-kernel tweaks to CFS defaults (mostly)
-  #   "kernel.sched_latency_ns" = 4000000;
-  #   # should be one-eighth of sched_latency (this ratio is not
-  #   # configurable, apparently -- so while zen changes that to
-  #   # one-tenth, we cannot):
-  #   "kernel.sched_min_granularity_ns" = 500000;
-  #   "kernel.sched_wakeup_granularity_ns" = 50000;
-  #   "kernel.sched_migration_cost_ns" = 250000;
-  #   "kernel.sched_cfs_bandwidth_slice_us" = 3000;
-  #   "kernel.sched_nr_migrate" = 128;
-  # };
-  # systemd = {
-  #   extraConfig = ''
-  #     DefaultCPUAccounting=yes
-  #     DefaultMemoryAccounting=yes
-  #     DefaultIOAccounting=yes
-  #   '';
-  #   user.extraConfig = ''
-  #     DefaultCPUAccounting=yes
-  #     DefaultMemoryAccounting=yes
-  #     DefaultIOAccounting=yes
-  #   '';
-  #   services."user@".serviceConfig.Delegate = true;
-  # };
-  services.scx.enable = true; # by default uses scx_rustland scheduler
-  #services.scx.package = pkgs.scx_git.full; # latest from git
-  services.scx.scheduler = "scx_lavd";
-  services.scx.extraArgs = [ "--performance" ];
-  systemd.sleep.extraConfig = ''
-    AllowSuspend=no
-    AllowHibernation=no
-    AllowHybridSleep=no
-    AllowSuspendThenHibernate=no
-  '';
 
   # My custom modules
+  kernel.xanmod.enable = true;
   steam.enable = true;
   steam.enableExtraPackages = true;
   steam.mangohud.enable = true;
@@ -83,9 +36,6 @@
 
   networking.hostName = "monsterdator"; # Define your hostname.
   networking.firewall.enable = lib.mkForce false;
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
@@ -95,10 +45,6 @@
     clean.extraArgs = "--keep-since 4d --keep 3";
     flake = "/home/ogge/nixos-config";
   };
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";

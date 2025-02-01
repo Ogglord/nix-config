@@ -1,4 +1,4 @@
-{config, ...}: {
+{ config, pkgs, ... }: {
   # Enable Bluetooth
   hardware.bluetooth = {
     enable = true;
@@ -14,12 +14,14 @@
       FastConnectable = true;
     };
   };
+
+  #environment.systemPackages = with pkgs; [ xone ];
   #services.blueman.enable = true;
 
-  hardware.xpadneo.enable = true; # Enable the xpadneo driver for Xbox One wireless controllers
+  #hardware.xpadneo.enable = true; # Enable the xpadneo driver for Xbox One wireless controllers
 
   boot = {
-    extraModulePackages = with config.boot.kernelPackages; [xpadneo];
+    #extraModulePackages = with config.boot.kernelPackages; [ xpadneo ];
     extraModprobeConfig = ''
       options bluetooth disable_ertm=Y
     '';

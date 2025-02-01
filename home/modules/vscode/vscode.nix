@@ -17,6 +17,7 @@ in {
     mutableExtensionsDir = false;
 
     userSettings = {
+      "terminal.integrated.fontFamily" = "Iosevka Nerd Font Propo";
       "extensions.autoCheckUpdates" = false;
       "update.mode" = "none";
       "editor.inlineSuggest.suppressSuggestions" = true;
