@@ -53,7 +53,7 @@
     pulse.enable = true;
   };
 
-  virtualisation.docker.extraOptions = "--log-opt max-size=10m";
+  virtualisation.docker.extraOptions = "--log-level=error";
   virtualisation.docker.enableOnBoot = false;
   virtualisation.docker.autoPrune.enable = true;
   virtualisation.docker.autoPrune.flags = [ "--all" ];
