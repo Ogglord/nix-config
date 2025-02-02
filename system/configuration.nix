@@ -5,27 +5,13 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    -/bootloader.nix
     ./graphics-configuration.nix
     ./disk-configuration.nix
     ./modules
   ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
-  hardware.enableRedistributableFirmware = true;
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot = {
-    enable = true;
-    edk2-uefi-shell.enable = true;
-    configurationLimit = 5; # Optional: limits number of configurations to keep
-    extraEntries = {
-      "bazzite_cl.conf" = ''
-        title Bazzite Chainload
-        efi /efi/edk2-uefi-shell/shell.efi
-        options -nointerrupt -nomap -noversion HD1b:\EFI\fedora\shimx64.efi
-      '';
-    };
-  };
-  boot.loader.efi.canTouchEfiVariables = true;
 
   # My custom modules
   kernel.xanmod.enable = true;
@@ -54,14 +40,12 @@
     useXkbConfig = true; # use xkb.options in tty.
   };
 
-  ## COSMIC
-  #services.desktopManager.cosmic.enable = true;
-  #services.displayManager.cosmic-greeter.enable = true;
-
-  ## KDE6
-  # Enable the X11 windowing system.
+  ## KDE Plasma
   services.xserver.enable = false;
   services.desktopManager.plasma6.enable = true;
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [ elisa krdp ];
+
+  ## SDDM
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
@@ -81,13 +65,8 @@
     };
   };
 
-  environment.plasma6.excludePackages = with pkgs.kdePackages; [ elisa krdp ];
-
   environment.pathsToLink =
     [ "/share/xdg-desktop-portal" "/share/applications" ];
-  services.vscode-server.enable = true;
-
-  services.flatpak.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb.layout = "se";
@@ -99,7 +78,6 @@
     pulse.enable = true;
   };
 
-  programs.zsh.enable = true;
   # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.ogge = {
     shell = pkgs.zsh;
@@ -111,44 +89,33 @@
     ];
   };
 
-  # Enable passwordless sudo for wheel group
+  #############################
+  #### Security settings #####
+  ############################
   security.sudo.wheelNeedsPassword = false;
-
-  services.gnome.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true;
-
   security.pam.services.kwallet = {
     name = "kwallet";
     enableKwallet = true;
   };
 
-  programs.firefox.enable = true;
+  #############################
+  #### System applications ####
+  #############################
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  programs.firefox.enable = true;
+  programs.zsh.enable = true;
   environment.systemPackages = with pkgs; [
     edk2-uefi-shell
     kdePackages.qtmultimedia
-    #(pkgs.catppuccin-sddm.override {
-    #  flavor = "mocha";
-    #  font = "Noto Sans";
-    #  fontSize = "9";
-    #  #background = "/home/ogge/Pictures/wallpapers/1.jpg";
-    #  loginBackground = true;
-    #})
-    #nixpkgs-fmt
-    #dr460nized-kde-theme # chaotic nix repo
-    #proton-ge-custom
   ];
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
+  # List services that you want to enable:  
   services.openssh.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+  services.vscode-server.enable = true;
+  services.flatpak.enable = true;
 
-  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
-  # and migrated your data accordingly.
-  #
-  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "25.05"; # Did you read the comment?
+  system.stateVersion =
+    "25.05"; # Do NOT change this value unless you know what you are doing!
 }
