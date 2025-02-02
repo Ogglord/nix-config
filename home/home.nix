@@ -30,10 +30,8 @@ in {
     packages = with pkgs; [
       # System Utilities
       alejandra # nix formatter written in rust
-      bat
       btop
       direnv
-      eza
       fio
       ghostty
       iperf3

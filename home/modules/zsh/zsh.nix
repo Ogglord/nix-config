@@ -1,9 +1,4 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}: {
+{ pkgs, lib, config, ... }: {
   home.packages = with pkgs; [
     bat
     eza
@@ -86,7 +81,7 @@
       alias nix="noglob nix"
 
       # Always color ls and group directories
-      alias ls='ls --color=auto'
+      alias ls='eza --group-directories-first'
     '';
 
     initExtra = ''
@@ -97,21 +92,21 @@
 
 
       typeset -ga _zshrcd=(
-        ''$ZSHRCD
+        $ZSHRCD
         ''${ZDOTDIR:-/dev/null}/zshrc.d(N)
         ''${HOME}/.zshrc.d(N)
         ''${ZDOTDIR:-$HOME}/.config/zsh/zshrc.d(N)
       )
-      if [[ ! -e "''$_zshrcd[1]" ]]; then
+      if [[ ! -e "$_zshrcd[1]" ]]; then
         echo >&2 "zshrc.d: dir not found HOME or ZDOTDIR path!"
         return 1
       fi
 
-      typeset -ga _zshrcd=("''$_zshrcd[1]"/*.{sh,zsh}(N))
+      typeset -ga _zshrcd=("$_zshrcd[1]"/*.{sh,zsh}(N))
       typeset -g _zshrcd_file
       for _zshrcd_file in ''${(o)_zshrcd}; do
         [[ ''${_zshrcd_file:t} != '~'* ]] || continue  # ignore tilde files
-        source "''$_zshrcd_file"
+        source "$_zshrcd_file"
       done
       unset _zshrcd{,_file}
 

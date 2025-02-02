@@ -31,6 +31,7 @@ alias cdh='cd ~/.config/home-manager'
 alias neofetch='$(command -v macchina &> /dev/null && echo macchina || echo neofetch)'
 alias just="just -g"
 
-# Nix Home Manager
-alias switch='~/.nix-profile/bin/home-manager switch && echo "Reloading Zsh..." && source ~/.zshrc'
-alias build='~/.nix-profile/bin/home-manager build'
+# Nix Home Manager 
+# TODO: use nh insteadd of nix-home-manager
+#alias switch='~/.nix-profile/bin/home-manager switch && echo "Reloading Zsh..." && source ~/.zshrc'
+#alias build='~/.nix-profile/bin/home-manager build'
