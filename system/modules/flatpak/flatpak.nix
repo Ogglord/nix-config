@@ -13,6 +13,10 @@
       # origin = "flathub-beta";
     }
     "com.spotify.Client"
+    {
+      appId = "org.fkoehler.KTailctl";
+      origin = "flathub-beta";
+    }
   ];
 
   services.flatpak.update.auto = {
