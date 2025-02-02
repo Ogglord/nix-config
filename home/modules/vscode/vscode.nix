@@ -29,17 +29,7 @@ in {
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nixd";
       "nix.serverSettings" = {
-        "nixd" = {
-          "formatting" = {
-            #"command" = ["alejandra"];
-            "command" = [ "nixfmt" ];
-          };
-          #"options" = {
-          #  "nixos" = {
-          #    "expr" = "(builtins.getFlake \"/home/ogge/nixos-config/flake.nix\").nixosConfigurations.monsterdator.options";
-          #  };
-          #};
-        };
+        "nixd" = { "formatting" = { "command" = [ "nixfmt" ]; }; };
       };
     };
 
