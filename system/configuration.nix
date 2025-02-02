@@ -65,13 +65,13 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
-    extraPackages = with pkgs; [ kdePackages.qtmultimedia ];
+    extraPackages = with pkgs.kdePackages; [ qtmultimedia ];
 
     settings = {
       Theme = {
         Current = "sddm-astronaut-theme";
         ThemeDir = "${pkgs.sddm-astronaut}/share/sddm/themes";
-        FaceDir = "${pkgs.ogge-resources}/share/ogges-resources";
+        FaceDir = "${pkgs.ogge-resources}/share/ogge-resources";
       };
       Autologin = {
         Session = "plasma.desktop";
@@ -126,21 +126,20 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs;
-    [
-      edk2-uefi-shell
-
-      #(pkgs.catppuccin-sddm.override {
-      #  flavor = "mocha";
-      #  font = "Noto Sans";
-      #  fontSize = "9";
-      #  #background = "/home/ogge/Pictures/wallpapers/1.jpg";
-      #  loginBackground = true;
-      #})
-      #nixpkgs-fmt
-      #dr460nized-kde-theme # chaotic nix repo
-      #proton-ge-custom
-    ];
+  environment.systemPackages = with pkgs; [
+    edk2-uefi-shell
+    kdePackages.qtmultimedia
+    #(pkgs.catppuccin-sddm.override {
+    #  flavor = "mocha";
+    #  font = "Noto Sans";
+    #  fontSize = "9";
+    #  #background = "/home/ogge/Pictures/wallpapers/1.jpg";
+    #  loginBackground = true;
+    #})
+    #nixpkgs-fmt
+    #dr460nized-kde-theme # chaotic nix repo
+    #proton-ge-custom
+  ];
 
   # List services that you want to enable:
 

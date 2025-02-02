@@ -17,6 +17,8 @@ in {
     username = "${USER}";
     homeDirectory = "/home/${USER}";
     stateVersion = "23.11"; # Do not change unless you know what you're doing
+    file.".face".source =
+      "${pkgs.ogge-resources}/share/ogge-resources/ogge.jpeg";
 
     # Environment Variables
     sessionVariables = {
