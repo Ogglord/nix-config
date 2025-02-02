@@ -1,7 +1,7 @@
 { lib, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
-    -/bootloader.nix
+    ./bootloader.nix
     ./graphics-configuration.nix
     ./disk-configuration.nix
     ./modules

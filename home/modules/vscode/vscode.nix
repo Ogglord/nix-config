@@ -54,6 +54,8 @@ in {
 
         # AI Assistance
         saoudrizwan.claude-dev
+        github.copilot
+        github.copilot-chat
 
         # straight_from_marketplace
       ] ++ [ cody-ai ];
