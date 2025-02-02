@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 let
   cody-ai = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
     mktplcRef = {
@@ -23,6 +23,7 @@ in {
       "editor.inlineSuggest.suppressSuggestions" = true;
       "git.enableSmartCommit" = true;
       "git.confirmSync" = false;
+      "git.postCommitCommand" = "sync";
       "editor.formatOnSave" = true;
       "editor.formatOnPaste" = true;
       "nix.enableLanguageServer" = true;
@@ -59,5 +60,7 @@ in {
 
         # straight_from_marketplace
       ] ++ [ cody-ai ];
+
+    ## test comment
   };
 }
