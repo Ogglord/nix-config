@@ -2,14 +2,12 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.follows = "nixos-cosmic/nixpkgs";
-    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
-    nix-environments = {
-      url = "github:nix-community/nix-environments";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -35,8 +33,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, disko, home-manager, plasma-manager
-    , nix-environments, nixos-cosmic, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -60,11 +57,12 @@
               };
             }
             ./system/configuration.nix
-            nixos-cosmic.nixosModules.default
-            disko.nixosModules.disko
+
+            inputs.disko.nixosModules.disko
             inputs.vscode-server.nixosModules.default
             inputs.chaotic.nixosModules.default
             inputs.nix-flatpak.nixosModules.nix-flatpak
+            inputs.nix-index-database.nixosModules.nix-index
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -75,7 +73,7 @@
               home-manager.users.ogge = { ... }: {
                 imports = [
                   ./home/home.nix
-                  plasma-manager.homeManagerModules.plasma-manager
+                  inputs.plasma-manager.homeManagerModules.plasma-manager
                   {
                     nixpkgs.config.allowUnfree = true;
                     nixpkgs.config.allowAliases = true;

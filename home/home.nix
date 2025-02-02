@@ -31,7 +31,8 @@ in {
       # System Utilities
       alejandra # nix formatter written in rust
       btop
-      comma # run any app without installing, prefix it with ","
+      fio
+      iperf3
       ghostty
       direnv
       nil

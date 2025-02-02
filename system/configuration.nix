@@ -34,6 +34,7 @@
   # standard applications
   programs.firefox.enable = true;
   programs.zsh.enable = true;
+  programs.nix-index-database.comma.enable = true;
   environment.systemPackages = with pkgs; [
     edk2-uefi-shell
     kdePackages.qtmultimedia
@@ -52,8 +53,11 @@
     pulse.enable = true;
   };
 
-  services.docker.enable = true;
-  services.docker.dockerd.extraOptions = "--log-opt max-size=10m";
+  virtualisation.docker.extraOptions = "--log-opt max-size=10m";
+  virtualisation.docker.enableOnBoot = false;
+  virtualisation.docker.autoPrune.enable = true;
+  virtualisation.docker.autoPrune.flags = [ "--all" ];
+  virtualisation.docker.storageDriver = "btrfs";
   virtualisation.docker.enable = true;
 
   # KDE Plasma
