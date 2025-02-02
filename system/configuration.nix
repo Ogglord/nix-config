@@ -15,7 +15,7 @@
     shell = pkgs.zsh;
     uid = 1000;
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable 'sudo' for the user.
+    extraGroups = [ "wheel" "docker" ]; # Enable 'sudo' for the user.
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBepw1+OYharGgNwEMV+VLir7G1LWjkVSQa7HPNlYYgU ogge@Oscars-MacBook-Pro-2.local"
     ];
@@ -37,6 +37,7 @@
   environment.systemPackages = with pkgs; [
     edk2-uefi-shell
     kdePackages.qtmultimedia
+    distrobox
   ];
 
   #############################
@@ -50,6 +51,10 @@
     enable = true;
     pulse.enable = true;
   };
+
+  services.docker.enable = true;
+  services.docker.dockerd.extraOptions = "--log-opt max-size=10m";
+  virtualisation.docker.enable = true;
 
   # KDE Plasma
   services.xserver.enable = false;
