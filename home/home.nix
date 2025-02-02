@@ -30,11 +30,14 @@ in {
     packages = with pkgs; [
       # System Utilities
       alejandra # nix formatter written in rust
+      bat
       btop
-      fio
-      iperf3
-      ghostty
       direnv
+      eza
+      fio
+      ghostty
+      iperf3
+      ncdu
       nil
       nixd
       nixfmt
