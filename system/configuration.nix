@@ -65,9 +65,14 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
-    theme = "Dracula";
-    #  keyboardLayout = "sv-latin1";
+    extraPackages = with pkgs; [ kdePackages.qtmultimedia ];
+
     settings = {
+      Theme = {
+        Current = "sddm-astronaut-theme";
+        ThemeDir = "${pkgs.sddm-astronaut}/share/sddm/themes";
+        FaceDir = "${pkgs.ogge-resources}/share/ogges-resources";
+      };
       Autologin = {
         Session = "plasma.desktop";
         User = "ogge";
@@ -124,6 +129,7 @@
   environment.systemPackages = with pkgs;
     [
       edk2-uefi-shell
+
       #(pkgs.catppuccin-sddm.override {
       #  flavor = "mocha";
       #  font = "Noto Sans";

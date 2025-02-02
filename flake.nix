@@ -40,6 +40,9 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      myPackages = final: prev: {
+        ogge-resources = final.callPackage ./pkgs/ogge-resources { };
+      };
     in {
       nixosConfigurations = {
         # Using the hostname from configuration.nix
@@ -47,6 +50,7 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
+            { nixpkgs.overlays = [ myPackages ]; }
             {
               nix.settings = {
                 substituters = [ "https://cosmic.cachix.org/" ];
