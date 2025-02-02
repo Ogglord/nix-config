@@ -63,6 +63,7 @@
             inputs.chaotic.nixosModules.default
             inputs.nix-flatpak.nixosModules.nix-flatpak
             inputs.nix-index-database.nixosModules.nix-index
+            inputs.sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
