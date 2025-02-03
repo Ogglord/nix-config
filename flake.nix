@@ -7,7 +7,6 @@
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     flake-utils.url = "github:numtide/flake-utils";
-    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -45,17 +44,6 @@
         ogge-resources = final.callPackage ./pkgs/ogge-resources { };
       };
     in {
-      checks.${system} = {
-        pre-commit-check = pre-commit-hooks.lib.${system}.run {
-          src = ./.;
-          hooks = {
-            alejandra.enable = true; # Nix formatter
-            nixpkgs-fmt.enable = true;
-            statix.enable = true; # Nix linter
-            deadnix.enable = true; # Find dead Nix code
-          };
-        };
-      };
 
       nixosConfigurations = {
         # Using the hostname from configuration.nix
