@@ -26,6 +26,7 @@ in {
       "git.postCommitCommand" = "sync";
       "editor.formatOnSave" = true;
       "editor.formatOnPaste" = true;
+      "cody.suggestions.mode"= "auto-edit (Experimental)";
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nixd";
       "nix.serverSettings" = {
