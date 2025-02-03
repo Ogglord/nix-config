@@ -2,9 +2,12 @@
   description = "NixOS configuration";
 
   inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+    flake-utils.url = "github:numtide/flake-utils";
+    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -33,18 +36,31 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs =
+    { nixpkgs, home-manager, flake-utils, pre-commit-hooks, ... }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+
       myPackages = final: prev: {
         ogge-resources = final.callPackage ./pkgs/ogge-resources { };
       };
     in {
+      checks.${system} = {
+        pre-commit-check = pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            alejandra.enable = true; # Nix formatter
+            nixpkgs-fmt.enable = true;
+            statix.enable = true; # Nix linter
+            deadnix.enable = true; # Find dead Nix code
+          };
+        };
+      };
+
       nixosConfigurations = {
         # Using the hostname from configuration.nix
         monsterdator = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
+          inherit system;
           specialArgs = { inherit inputs; };
           modules = [
             { nixpkgs.overlays = [ myPackages ]; }
@@ -84,39 +100,6 @@
             }
           ];
         };
-      };
-
-      devShells.${system}.openwrt = pkgs.mkShell {
-        name = "openwrt-devshell";
-        buildInputs = with pkgs; [
-          bison
-          gnupg
-          go
-          libelf
-          llvmPackages_latest.llvm
-          ncdu
-          openssl
-          swig
-          quilt
-          squashfsTools
-          unzip
-          wget
-          zstd
-          ncurses
-          pkg-config
-          (python3.withPackages (ps: [ ps.distutils ps.pip ps.setuptools ]))
-        ];
-        shellHook = ''
-          # Find the most recent LLVM library path
-          LLVM_HOST_PATH=${pkgs.llvmPackages_latest.llvm}/bin
-
-          # Export the LLVM host path
-          export LLVM_HOST_PATH
-
-          echo "OpenWrt development shell"
-          echo "LLVM Host Path: $LLVM_HOST_PATH"
-          echo "ncurses-dev Path: ${pkgs.ncurses.dev}"
-        '';
       };
     };
 }
