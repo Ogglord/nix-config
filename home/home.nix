@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, nix-colors, ... }:
 let USER = "ogge";
 in {
   imports = [ ./dotfiles ./modules ];
@@ -47,6 +47,9 @@ in {
       nerd-fonts.code-new-roman
     ];
   };
+
+  #colorScheme = nix-colors.colorSchemes.dracula;
+  colorScheme = nix-colors.colorSchemes.nord;
 
   # System Configuration
   # ------------------------

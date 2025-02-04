@@ -7,6 +7,7 @@
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     flake-utils.url = "github:numtide/flake-utils";
+    nix-colors.url = "github:misterio77/nix-colors";
 
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -35,8 +36,7 @@
     };
   };
 
-  outputs =
-    { nixpkgs, home-manager, flake-utils, pre-commit-hooks, ... }@inputs:
+  outputs = { nixpkgs, home-manager, nix-colors, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -49,7 +49,7 @@
         # Using the hostname from configuration.nix
         monsterdator = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs nix-colors; };
           modules = [
             { nixpkgs.overlays = [ myPackages ]; }
             {
@@ -68,24 +68,29 @@
             inputs.nix-flatpak.nixosModules.nix-flatpak
             inputs.nix-index-database.nixosModules.nix-index
             inputs.sops-nix.nixosModules.sops
+
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "bak";
-              home-manager.sharedModules =
-                [ inputs.sops-nix.homeManagerModules.sops ];
-              home-manager.users.ogge = { ... }: {
-                imports = [
-                  ./home/home.nix
-                  inputs.plasma-manager.homeManagerModules.plasma-manager
-                  {
-                    nixpkgs.config.allowUnfree = true;
-                    nixpkgs.config.allowAliases = true;
-                  }
-                ];
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                backupFileExtension = "bak";
+                sharedModules = [ inputs.sops-nix.homeManagerModules.sops ];
+                users.ogge = { ... }: {
+                  imports = [
+                    ./home/home.nix
+                    nix-colors.homeManagerModules.default
+                    inputs.plasma-manager.homeManagerModules.plasma-manager
+                    {
+                      nixpkgs.config.allowUnfree = true;
+                      nixpkgs.config.allowAliases = true;
+                    }
+                  ];
+                  _module.args = { inherit nix-colors; };
+                };
               };
             }
+
           ];
         };
       };
