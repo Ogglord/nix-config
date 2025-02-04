@@ -1,0 +1,10 @@
+keys:
+  - &ogge_nix age1uhxu0az9hgjuqj65035xkf2385jt9j9kvn7gpyr6kl9japj9maysp42ngr
+  - &oscar_macbook age12v5yalr5ut8jw8tq9607degpwd39cv2jkc5unlsfzgqt3e9zxv7q6s7dac
+
+creation_rules:
+  - path_regex: secrets/.*
+    key_groups:
+    - age:
+      - *ogge_nix
+      - *oscar_macbook

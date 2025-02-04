@@ -1,0 +1,11 @@
+{
+    "make_nix_module": {
+        "prompt": "refactor the selected nix code into a separate module, move the configuration into ./modules/<name>/<name>.nix and add a default.nix in the same folder",
+        "context": {
+            "selection": true,
+            "currentFile": true,
+            "currentDir": true
+        },
+        "mode": "ask"
+    }
+}

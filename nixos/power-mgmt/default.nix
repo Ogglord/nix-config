@@ -1,0 +1,1 @@
+{ imports = [ ./power-mgmt.nix ]; }

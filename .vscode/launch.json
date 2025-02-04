@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "NixOS Switch",
+            "type": "node",
+            "request": "launch",
+            "runtimeArgs": [
+                "-c",
+                "nh os switch"
+            ],
+            "runtimeExecutable": "bash",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        }
+    ]
+}
