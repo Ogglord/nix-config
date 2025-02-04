@@ -9,9 +9,9 @@ This repository contains my NixOS configuration, which is managed using Nix flak
       .
       ├── home-manager/          # Home-manager configurations
       │   └── home.nix           # Default home-manager configuration      
+      ├── modules/               # NixOS and home-manager modules      
       ├── nixos/                 # Host-specific configurations
       │   └── configuration.nix  # Default host configuration
-      ├── modules/               # NixOS and home-manager modules
       ├── secrets/               # Encrypted secrets
       └── flake.nix              # Main system configuration
 
