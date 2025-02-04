@@ -44,7 +44,7 @@
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   home.packages = with pkgs; [
-    #alejandra # nix formatter written in rust
+    alejandra # nix formatter written in rust
     btop
     direnv
     fio

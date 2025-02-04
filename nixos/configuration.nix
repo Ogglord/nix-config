@@ -110,6 +110,12 @@
   # standard applications
   programs.firefox.enable = true;
   programs.zsh.enable = true;
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 4d --keep 3";
+    flake = "/home/ogge/nix-config";
+  };
   programs.nix-index-database.comma.enable = true;
   environment.systemPackages = with pkgs; [
     edk2-uefi-shell
@@ -177,12 +183,6 @@
   #### Time and date ####
   #######################
   time.timeZone = "Europe/Stockholm";
-  programs.nh = {
-    enable = true;
-    clean.enable = true;
-    clean.extraArgs = "--keep-since 4d --keep 3";
-    flake = "/home/ogge/nixos-config";
-  };
 
   ###########################
   #### Locale & Keyboard ####

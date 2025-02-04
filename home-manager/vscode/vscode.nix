@@ -29,12 +29,14 @@ in {
       "cody.suggestions.mode" = "auto-edit (Experimental)";
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nil";
-      #"nix.serverSettings" = {
-      #  "nixd" = { "formatting" = { "command" = [ "nixfmt" ]; }; };
-      #};
-      "nil" = {
-        "diagnostics" = { "ignored" = [ "unused_binding" "unused_with" ]; };
-        "formatting" = { "command" = [ "nixpkgs-fmt" ]; };
+      "nix.serverSettings" = {
+        
+      #"nixd" = { "formatting" = { "command" = [ "nixfmt" ]; }; };
+      
+        "nil" = {
+          "diagnostics" = { "ignored" = [ "unused_binding" "unused_with" ]; };
+          "formatting" = { "command" = [ "nixpkgs-fmt" ]; };
+        };
       };
     };
 
