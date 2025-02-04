@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   cody-ai = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
     mktplcRef = {
       name = "cody-ai";
@@ -30,12 +29,9 @@ in {
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nil";
       "nix.serverSettings" = {
-        
-      #"nixd" = { "formatting" = { "command" = [ "nixfmt" ]; }; };
-      
         "nil" = {
-          "diagnostics" = { "ignored" = [ "unused_binding" "unused_with" ]; };
-          "formatting" = { "command" = [ "nixpkgs-fmt" ]; };
+          "diagnostics" = {"ignored" = ["unused_binding" "unused_with"];};
+          "formatting" = {"command" = ["alejandra"];};
         };
       };
     };
@@ -56,7 +52,8 @@ in {
         github.copilot-chat
 
         # straight_from_marketplace
-      ] ++ [ cody-ai ];
+      ]
+      ++ [cody-ai];
 
     ## test comment
   };
