@@ -27,13 +27,23 @@ in {
       "editor.formatOnPaste" = true;
       "cody.suggestions.mode" = "auto-edit (Experimental)";
       "nix.enableLanguageServer" = true;
-      "nix.serverPath" = "nil";
+      #"nix.serverPath" = "nil";
+      #"nix.serverSettings" = {
+      #  "nil" = {
+      #    "diagnostics" = {"ignored" = ["unused_binding" "unused_with"];};
+      #    "formatting" = {"command" = ["alejandra"];};
+      #  };
+      #};
+      "nix.serverPath" = "nixd";
       "nix.serverSettings" = {
-        "nil" = {
+        "nixd" = {
           "diagnostics" = {"ignored" = ["unused_binding" "unused_with"];};
           "formatting" = {"command" = ["alejandra"];};
         };
       };
+      "nix.hiddenLanguageServerErrors" = [
+        "textDocument/formatting"
+      ];
     };
 
     extensions = with pkgs.vscode-extensions;

@@ -1,20 +1,22 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}: {
   # You can import other home-manager modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
 
     # Or modules exported from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModules.default
     inputs.sops-nix.homeManagerModules.sops
     inputs.nix-colors.homeManagerModules.default
     inputs.plasma-manager.homeManagerModules.plasma-manager
-    #{
-    #  nixpkgs.config.allowUnfree = true;
-    #  nixpkgs.config.allowAliases = true;
-    #}
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
@@ -52,8 +54,8 @@
     iperf3
     ncdu
     nil
-    #nixd
-    #nixfmt
+    nvtopPackages.full
+    nixd
     nordic
 
     # Fonts
@@ -73,7 +75,7 @@
     enable = true;
     userName = "Ogglord";
     userEmail = "oag@proton.me";
-    extraConfig = { init.defaultBranch = "main"; };
+    extraConfig = {init.defaultBranch = "main";};
   };
 
   # GitHub CLI Configuration

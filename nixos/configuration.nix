@@ -1,6 +1,13 @@
 # This is your system's configuration file.
 # Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}: {
   # You can import other NixOS modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):
@@ -23,14 +30,14 @@
     ./bootloader.nix
     ./bluetooth
     ./flatpak
-    ./kernel-xanmod
+    ./kernel/xanmod
+    ./kernel/cachyos
     ./power-mgmt
     ./steam
     # ./users.nix
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
-
   ];
 
   nixpkgs = {
@@ -55,10 +62,12 @@
     config = {
       # Disable if you don't want unfree packages
       allowUnfree = true;
+      allowAliases = true;
     };
   };
 
-  nix = let flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+  nix = let
+    flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
   in {
     settings = {
       # Enable flakes and new 'nix' command
@@ -72,7 +81,7 @@
     channel.enable = false;
 
     # Opinionated: make flake registry and nix path match flake inputs
-    registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
+    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
     nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
   };
 
@@ -93,7 +102,7 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBepw1+OYharGgNwEMV+VLir7G1LWjkVSQa7HPNlYYgU ogge@Oscars-MacBook-Pro-2.local"
       ];
       # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
-      extraGroups = [ "wheel" "networkmanager" "audio" "video" "docker" ];
+      extraGroups = ["wheel" "networkmanager" "audio" "video" "docker"];
     };
   };
 
@@ -148,22 +157,21 @@
   virtualisation.docker.extraOptions = "--log-level=error";
   virtualisation.docker.enableOnBoot = false;
   virtualisation.docker.autoPrune.enable = true;
-  virtualisation.docker.autoPrune.flags = [ "--all" ];
+  virtualisation.docker.autoPrune.flags = ["--all"];
   virtualisation.docker.storageDriver = "btrfs";
   virtualisation.docker.enable = true;
 
   # KDE Plasma
   services.xserver.enable = false;
   services.desktopManager.plasma6.enable = true;
-  environment.plasma6.excludePackages = with pkgs.kdePackages; [ elisa krdp ];
-  environment.pathsToLink =
-    [ "/share/xdg-desktop-portal" "/share/applications" ];
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [elisa krdp];
+  environment.pathsToLink = ["/share/xdg-desktop-portal" "/share/applications"];
 
   ## SDDM
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
-    extraPackages = with pkgs.kdePackages; [ qtmultimedia ];
+    extraPackages = with pkgs.kdePackages; [qtmultimedia];
 
     settings = {
       Theme = {
@@ -175,7 +183,7 @@
         Session = "plasma.desktop";
         User = "ogge";
       };
-      X11 = { KeyboardLayout = "sv-latin1"; };
+      X11 = {KeyboardLayout = "sv-latin1";};
     };
   };
 
@@ -207,6 +215,5 @@
     enableKwallet = true;
   };
 
-  system.stateVersion =
-    "25.05"; # Do NOT change this value unless you know what you are doing!
+  system.stateVersion = "25.05"; # Do NOT change this value unless you know what you are doing!
 }
