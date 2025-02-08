@@ -43,6 +43,7 @@ in {
       };
       "nix.hiddenLanguageServerErrors" = [
         "textDocument/formatting"
+        "textDocument/definition"
       ];
     };
 
