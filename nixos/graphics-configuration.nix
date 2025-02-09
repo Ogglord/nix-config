@@ -22,4 +22,6 @@
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
+
+  environment.systemPackages = with pkgs; [ nvtopPackages.nvidia ];
 }
