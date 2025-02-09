@@ -54,9 +54,9 @@
     iperf3
     ncdu
     nil
-    nvtopPackages.full
+    nvtopPackages.nvidia
     nixd
-    nordic
+    #nordic
 
     # Fonts
     nerd-fonts.jetbrains-mono
