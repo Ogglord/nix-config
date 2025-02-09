@@ -38,7 +38,7 @@
   ## my custom options
   zed.enable = true;
   zsh.enable = true;
-  macchina.enable = true;
+  macchina.enable = false;
   vscode.enable = true;
   plasma.enable = true;
   wallpaper.enable = true;
@@ -53,10 +53,10 @@
     ghostty
     iperf3
     ncdu
+    neofetch
     nil
-    nvtopPackages.nvidia
     nixd
-    #nordic
+    nvtopPackages.nvidia
 
     # Fonts
     nerd-fonts.jetbrains-mono
