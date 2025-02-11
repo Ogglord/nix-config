@@ -1,11 +1,15 @@
-{ config, lib, pkgs, ... }:
-with lib;
-let cfg = config.plasma;
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
+  cfg = config.plasma;
 in {
-  options.plasma = { enable = mkEnableOption "plasma"; };
+  options.plasma = {enable = mkEnableOption "plasma";};
 
   config = mkIf cfg.enable {
-
     home.packages = with pkgs; [
       # Themes and Customization
       bibata-cursors
@@ -26,8 +30,7 @@ in {
           theme = "Bibata-Modern-Ice";
           size = 32;
         };
-        wallpaper =
-          "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Patak/contents/images_dark/3840x2160.png";
+        wallpaper = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Patak/contents/images_dark/3840x2160.png";
       };
 
       shortcuts = {
@@ -37,15 +40,17 @@ in {
         "kwin"."Switch to Desktop 4" = "Meta+4";
       };
 
-      panels = [{
-        location = "bottom";
-        height = 38;
-      }];
+      panels = [
+        {
+          location = "bottom";
+          height = 38;
+        }
+      ];
 
       input.keyboard = {
         numlockOnStartup = "on";
-        layouts = [{ layout = "sv"; }];
-        options = [ "eurosign:e" "caps:escape" ];
+        layouts = [{layout = "sv";}];
+        options = ["eurosign:e" "caps:escape"];
       };
     };
   };

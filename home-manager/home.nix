@@ -84,6 +84,12 @@
     settings.git_protocol = "https";
   };
 
+  home.file.".config/neofetch/config.conf".source = builtins.fetchurl {
+    url = "https://raw.githubusercontent.com/Chick2D/neofetch-themes/refs/heads/main/normal/papirus.conf";
+    sha256 = "sha256:1hxf7vls2qsav4lxhyp2nc8rh0xgqykkmi59yj935rhvjiibp6ia";
+    # nix-prefetch-url https://raw.githubusercontent.com/Chick2D/neofetch-themes/refs/heads/main/normal/papirus.conf
+  };
+
   # Sops configuration
   sops = {
     age.keyFile = "/home/ogge/.config/sops/age/keys.txt";

@@ -88,6 +88,7 @@
   # FIXME: Add the rest of your current configuration
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
+  home-manager.backupFileExtension = "bak";
   # TODO: Set your hostname
   networking.hostName = "monsterdator";
 
