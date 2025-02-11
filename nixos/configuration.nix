@@ -85,16 +85,12 @@
     nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
   };
 
-  # FIXME: Add the rest of your current configuration
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.backupFileExtension = "bak";
-  # TODO: Set your hostname
   networking.hostName = "monsterdator";
 
-  # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
   users.users = {
-    # FIXME: Replace with your username
     ogge = {
       shell = pkgs.zsh;
       uid = 1000;

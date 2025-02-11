@@ -56,7 +56,6 @@
     neofetch
     nil
     nixd
-    nvtopPackages.nvidia
 
     # Fonts
     nerd-fonts.jetbrains-mono
