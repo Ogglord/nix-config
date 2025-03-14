@@ -1,9 +1,4 @@
 {
-  fileSystems."/boot/fedora" = {
-    device = "/dev/nvme1n1p1"; # Your Fedora ESP (adjust partition number if needed)
-    fsType = "vfat";
-  };
-
   disko.devices = {
     disk = {
       main = {

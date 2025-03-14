@@ -127,6 +127,8 @@
     edk2-uefi-shell
     kdePackages.qtmultimedia
     distrobox
+    i2c-tools
+    lshw
   ];
 
   #############################

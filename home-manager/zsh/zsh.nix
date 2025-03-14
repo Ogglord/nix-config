@@ -1,9 +1,12 @@
-{ pkgs, lib, ... }: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   home.packages = with pkgs; [
     bat
     eza
     less
-    macchina # neofetch alternative in rust
     micro
     ncdu
     tmux

@@ -14,8 +14,8 @@ in {
     environment.systemPackages = with pkgs; [
       #winetricks
       #protontricks
-      #protonup-qt
-      #proton-ge-custom
+      protonup-qt
+      proton-ge-custom
       #mangohud_git
       gamescope_git
     ];
